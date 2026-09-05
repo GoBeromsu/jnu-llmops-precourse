@@ -9,6 +9,7 @@ Day 1 의 검사는 출력 모양을 보지 않는다. Data 가 그대로인지,
 """
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -243,9 +244,10 @@ def check_d4():
     good = json.loads((ROOT / "experiment_records.json").read_text(encoding="utf-8"))
     cli_counts = {e: len(find_records(good, e, "Warning")) for e in ("HPLC-01", "GC-02", "CENT-03")}
     # Notebook 의 Code Cell 을 위에서 아래로 실제로 실행한다 (Restart and Run All 과 같은 순서, 새 namespace).
-    nb_source = notebook_code(ROOT / "notebooks" / "analysis.ipynb").replace("counts  #", "counts_result = counts  #")
+    nb_source = notebook_code(ROOT / "notebooks" / "analysis.ipynb")
     namespace = {"__name__": "__notebook__"}
     try:
+        os.chdir(ROOT)  # Notebook 은 저장소 Root 기준으로 Data 와 Module 을 찾는다
         exec(compile(nb_source, "notebooks/analysis.ipynb", "exec"), namespace)  # noqa: S102 — 학생 Notebook 을 그대로 실행
     except Exception as exc:  # noqa: BLE001 — Traceback 을 그대로 보여 준다
         return fail("D4-IMPORT", f"Notebook 을 처음부터 실행하면 실패합니다 (Restart and Run All 과 같은 결과).\n{type(exc).__name__}: {exc}")
