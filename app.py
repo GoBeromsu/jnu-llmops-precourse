@@ -35,10 +35,10 @@ target_status = "ALL"
 # Day 1: 출력 모양을 바꿔 본다. 따옴표 안의 문자열만 바꾼다.
 HEADER_TITLE = "장비 점검 기록"
 HEADER_RULE = "----------------------------"
-COLUMN_SEP = " | "
+COLUMN_SEP = "  ·  "
 LABEL_DATE = "날짜"
 LABEL_EQUIPMENT = "장비"
-LABEL_STATUS = "상태"
+LABEL_STATUS = "결과"
 # <<< TODO-GUIDED: D1-FMT <<<
 
 
