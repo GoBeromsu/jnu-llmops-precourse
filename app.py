@@ -27,7 +27,7 @@ RECORDS = [
 # Day 2: 검색할 장비를 바꿔 본다. 따옴표 안의 문자열만 바꾼다.
 # 장비 ID 후보: "HPLC-01", "GC-02", "CENT-03"
 # "ALL" 은 장비로 걸러내지 않고 12 건을 모두 보여 준다.
-target_equipment = "ALL"
+target_equipment = "HPLC-01"
 target_status = "ALL"
 # <<< TODO-GUIDED: D2-TARGET <<<
 
