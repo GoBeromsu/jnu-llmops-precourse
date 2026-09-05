@@ -1,0 +1,74 @@
+[
+  {
+    "date": "2026-08-03",
+    "equipment_id": "HPLC-01",
+    "status": "OK",
+    "operator": "Kim"
+  },
+  {
+    "date": "2026-08-04",
+    "equipment_id": "HPLC-01",
+    "status": "OK",
+    "operator": "Lee"
+  },
+  {
+    "date": "2026-08-05",
+    "equipment_id": "GC-02",
+    "status": "OK",
+    "operator": "Kim"
+  },
+  {
+    "date": "2026-08-06",
+    "equipment_id": "HPLC-01",
+    "status": "Warning",
+    "operator": "Park"
+  },
+  {
+    "date": "2026-08-07",
+    "equipment_id": "HPLC-01",
+    "status": "OK",
+    "operator": "Kim"
+  },
+  {
+    "date": "2026-08-10",
+    "equipment_id": "CENT-03",
+    "status": "OK",
+    "operator": "Lee"
+  },
+  {
+    "date": "2026-08-11",
+    "equipment_id": "HPLC-01",
+    "status": "OK",
+    "operator": "Park"
+  },
+  {
+    "date": "2026-08-12",
+    "equipment_id": "HPLC-01",
+    "status": "Warning",
+    "operator": "Kim"
+  },
+  {
+    "date": "2026-08-13",
+    "equipment_id": "GC-02",
+    "status": "OK",
+    "operator": "Lee"
+  },
+  {
+    "date": "2026-08-14",
+    "equipment_id": "HPLC-01",
+    "status": "OK",
+    "operator": "Park"
+  },
+  {
+    "date": "2026-08-17",
+    "equipment_id": "CENT-03",
+    "status": "OK",
+    "operator": "Kim"
+  },
+  {
+    "date": "2026-08-18",
+    "equipment_id": "HPLC-01",
+    "status": "OK",
+    "operator": "Lee"
+  }
+]

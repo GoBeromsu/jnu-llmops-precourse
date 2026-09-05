@@ -1,0 +1,6 @@
+[project]
+name = "jnu-llmops-precourse"
+version = "0.1.0"
+description = "전남대학교 LLM Ops 사전 강의 실습 저장소 — Virtual Lab Records"
+requires-python = ">=3.11"
+dependencies = []
