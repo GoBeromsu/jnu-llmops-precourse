@@ -104,8 +104,8 @@ def check_d1():
         return fail("D1-FMT", "Block 이 아직 시작 상태와 같습니다. 따옴표 안 문자열을 하나 이상 바꾸세요.")
     for line in lines:
         stripped = line.strip()
-        if stripped and not stripped.startswith("#") and "[" in stripped:
-            return fail("D1-FMT", "Day 1 Block 에는 따옴표 안 문자열만 바꿉니다. 대괄호 접근은 Day 3 에 배웁니다.")
+        if stripped and not stripped.startswith("#") and re.search(r"\b(record|RECORDS|records)\s*\[", stripped):
+            return fail("D1-FMT", "Day 1 Block 에는 따옴표 안 문자열만 바꿉니다. 대괄호로 기록을 꺼내는 것은 Day 3 에 배웁니다.")
     code, out, err_text = run_app()
     if code != 0:
         return fail("D1-FMT", f"app.py 가 실패했습니다.\n{err_text}")
@@ -241,9 +241,17 @@ def check_d4():
     except Exception as exc:  # noqa: BLE001
         return fail("D4-IMPORT", f"records.py 를 import 하지 못했습니다.\n{type(exc).__name__}: {exc}")
     good = json.loads((ROOT / "experiment_records.json").read_text(encoding="utf-8"))
-    counts = {e: len(find_records(good, e, "Warning")) for e in ("HPLC-01", "GC-02", "CENT-03")}
-    if list(counts.values()) != [2, 0, 0]:
-        return fail("D4-IMPORT", f"장비별 Warning 건수가 2/0/0 이어야 하는데 {counts} 입니다.")
+    cli_counts = {e: len(find_records(good, e, "Warning")) for e in ("HPLC-01", "GC-02", "CENT-03")}
+    # Notebook 의 Code Cell 을 위에서 아래로 실제로 실행한다 (Restart and Run All 과 같은 순서, 새 namespace).
+    nb_source = notebook_code(ROOT / "notebooks" / "analysis.ipynb").replace("counts  #", "counts_result = counts  #")
+    namespace = {"__name__": "__notebook__"}
+    try:
+        exec(compile(nb_source, "notebooks/analysis.ipynb", "exec"), namespace)  # noqa: S102 — 학생 Notebook 을 그대로 실행
+    except Exception as exc:  # noqa: BLE001 — Traceback 을 그대로 보여 준다
+        return fail("D4-IMPORT", f"Notebook 을 처음부터 실행하면 실패합니다 (Restart and Run All 과 같은 결과).\n{type(exc).__name__}: {exc}")
+    nb_counts = namespace.get("counts")
+    if nb_counts != cli_counts or list(cli_counts.values()) != [2, 0, 0]:
+        return fail("D4-IMPORT", f"CLI 는 {cli_counts}, Notebook 은 {nb_counts} 입니다. 장비별 Warning 건수는 2/0/0 으로 같아야 합니다.")
     return ok("D4-IMPORT", "CLI 와 Notebook 이 같은 Module 로 같은 숫자 2/0/0 을 냅니다.")
 
 
@@ -260,6 +268,10 @@ def check_env():
         problems.append("Python 3.11 이상이 필요합니다.")
     if not git:
         problems.append("git 이 PATH 에 없습니다.")
+    else:
+        m = re.search(r"(\d+)\.(\d+)", git_version)
+        if m and (int(m.group(1)), int(m.group(2))) < (2, 23):
+            problems.append("git 2.23 이상이 필요합니다 (git restore).")
     if problems:
         return fail("ENV", " / ".join(problems))
     print("[PASS] ENV: 이 명령이 동작한 Interpreter 를 수업 내내 그대로 쓰세요.")

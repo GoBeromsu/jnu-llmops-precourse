@@ -11,7 +11,7 @@ Upstage LLMOps 본과정에서 Python Code 와 환경 때문에 막히지 않도
 | 항목 | 확인 방법 | 기준 |
 | --- | --- | --- |
 | Python | `python3 --version` (Windows: `py -3 --version`) | 3.11 이상 |
-| Git | `git --version` | 어떤 버전이든 설치되어 있으면 된다 |
+| Git | `git --version` | 2.23 이상 (`git restore` 가 있는 버전) |
 | Editor | VS Code + Python + Jupyter 확장, 또는 `jupyter lab` 실행 가능 | Notebook 은 Day 4 에만 쓴다 |
 | GitHub | Browser Login 이 되고, 개인 Branch 를 Push 할 수 있다 | Push 가 안 되면 조교에게 미리 말한다 |
 | 이 저장소 | `git clone https://github.com/GoBeromsu/jnu-llmops-precourse.git` 후 `cd jnu-llmops-precourse` | Clone 이 되어야 Day 1 실습을 시작할 수 있다 |
@@ -66,7 +66,7 @@ Block ID (Block 마다 하나, 날짜마다가 아니다): `D1-FMT` `D2-TARGET` 
 | day | files present that day | repo path | symbol | block id | marker line range | edit-size rule | run CWD | canonical invocation | checker assertion | expected stdout (pre / instructor-reference) | checkpoint semantics |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `app.py` `pyproject.toml` `README.md` `notebooks/analysis.ipynb` `scripts/*` `checkpoints/*` | — | layout | — | — | — | repo root | `python3 app.py` / `py -3 app.py` | — | pre: 14 줄 (머리 2 + 기록 12) | — |
-| 1 | `app.py` | `app.py` | `HEADER_TITLE` `HEADER_RULE` `COLUMN_SEP` `LABEL_DATE` `LABEL_EQUIPMENT` `LABEL_STATUS` | `D1-FMT` | 34–42 (사이 7 줄) | 5~8 줄, 따옴표 안 문자열만 | repo root | `python3 scripts/check.py D1-FMT` | 출력 14 줄, 기록 12 건에 HPLC-01 8·Warning 2, Block 이 시작 상태와 다름. 모양은 보지 않는다 | pre: 아래 §pre-edit / instructor-reference: 아래 §reference (non-asserting) | `git restore app.py` 와 같음 — Commit 되지 않은 변경만 버린다. Commit 은 남는다 |
+| 1 | `app.py` | `app.py` | `HEADER_TITLE` `HEADER_RULE` `COLUMN_SEP` `LABEL_DATE` `LABEL_EQUIPMENT` `LABEL_STATUS` | `D1-FMT` | 34–42 (사이 7 줄) | 5~8 줄, 따옴표 안 문자열만 | repo root | `python3 scripts/check.py D1-FMT` | 출력 14 줄, 기록 12 건에 HPLC-01 8·Warning 2, Block 이 시작 상태와 다름. 모양은 보지 않는다 | pre: 아래 §pre-edit / instructor-reference: 아래 §reference (non-asserting) | `git restore --source=HEAD --staged --worktree app.py` 와 같음 — 마지막 Commit 상태로 되돌린다. Commit 은 남는다 |
 | 2 | `app.py` (Day 1 과 같음) | — | layout | — | — | — | repo root | `python3 app.py` | — | `HPLC-01` 로 좁히면 10 줄 (머리 2 + 8) | — |
 | 2 | `app.py` | `app.py` | `target_equipment` `target_status` | `D2-TARGET` | 26–32 (사이 5 줄) | 5~8 줄, 따옴표 안 문자열만 | repo root | `python3 scripts/check.py D2-TARGET` | 결과가 0 건도 12 건도 아님 | pre: 14 줄 / 정본: 10 줄 | `checkpoints/D2-TARGET/app.py` 를 덮어쓰고 Stage 하지 않음 |
 | 3 | `app.py` `records.py` `experiment_records.json` | — | layout | — | — | — | repo root | `python3 app.py` | — | Warning 만 남기면 4 줄 (머리 2 + 2) | — |
@@ -118,7 +118,7 @@ Block ID (Block 마다 하나, 날짜마다가 아니다): `D1-FMT` `D2-TARGET` 
 
 | BLOCK-ID | 되돌리는 것 | 남는 것 |
 | --- | --- | --- |
-| `D1-FMT` | `app.py` 의 Commit 되지 않은 변경 | 여러분의 Commit |
+| `D1-FMT` | `app.py` 를 마지막 Commit 상태로 (Stage 했더라도) | 여러분의 Commit |
 | `D2-TARGET` `D3-FILTER` `D3-EXTRACT` `D3-JSON` `D3-CHECK` | 해당 File 을 `checkpoints/<ID>/` 정본으로 덮어쓴다 (Stage 하지 않음) | 덮어쓴 File 을 `git diff` 로 읽고 Commit 하는 것은 여러분 몫 |
 | `DAY4-START` | 세 File 을 Day 3 완성 상태로 | — |
 | `D4-IMPORT` | `notebooks/analysis.ipynb` | — |
