@@ -129,3 +129,7 @@ Block ID (Block 마다 하나, 날짜마다가 아니다): `D1-FMT` `D2-TARGET` 
 
 Notebook 은 저장소 Root 기준으로 `records.py` 와 `experiment_records.json` 을 찾는다.
 VS Code 는 `.vscode/settings.json` 의 `jupyter.notebookFileRoot` 가 Root 를 잡아 준다. `jupyter lab` 은 Root 에서 실행한다. 첫 Code Cell 이 Root 를 한 번 더 확인한다.
+
+## Push 가 안 될 때
+
+GitHub 인증이 안 되면 Local 에서 Commit 까지 하고, 강사가 미리 열어 둔 읽기용 PR 을 보며 같은 구조로 자기 PR 본문을 씁니다: [강사 예시 PR](https://github.com/GoBeromsu/jnu-llmops-precourse/pull/1)
